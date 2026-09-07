@@ -1,0 +1,37 @@
+package com.courseregistration.repository;
+
+import java.util.List;
+
+import com.courseregistration.model.Student;
+import com.courseregistration.util.FileManager;
+
+public class StudentRepositoryImpl implements StudentRepository {
+
+    private List<Student> students;
+
+    public StudentRepositoryImpl() {
+        students = FileManager.loadStudents();
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        students.add(student);
+        FileManager.saveStudents(students);
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return students;
+    }
+
+    @Override
+    public Student getStudentById(int studentId) {
+        for (Student student : students) {
+            if (student.getStudentId() == studentId) {
+                return student;
+            }
+        }
+
+        return null;
+    }
+}
